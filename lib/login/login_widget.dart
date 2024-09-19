@@ -708,119 +708,124 @@ class _LoginWidgetState extends State<LoginWidget>
                       ],
                     ),
                   ),
-                  Stack(
-                    children: [
-                      if (_model.tabBarCurrentIndex == 1)
-                        FFButtonWidget(
-                          onPressed: () async {
-                            if (_model.formKey1.currentState == null ||
-                                !_model.formKey1.currentState!.validate()) {
-                              return;
-                            }
-                            GoRouter.of(context).prepareAuthEvent();
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
+                    child: Stack(
+                      children: [
+                        if (_model.tabBarCurrentIndex == 1)
+                          FFButtonWidget(
+                            onPressed: () async {
+                              if (_model.formKey1.currentState == null ||
+                                  !_model.formKey1.currentState!.validate()) {
+                                return;
+                              }
+                              GoRouter.of(context).prepareAuthEvent();
 
-                            final user = await authManager.signInWithEmail(
-                              context,
-                              _model.loginEmailTextController.text,
-                              _model.loginPasswordTextController.text,
-                            );
-                            if (user == null) {
-                              return;
-                            }
-
-                            context.goNamedAuth('tasks', context.mounted);
-                          },
-                          text: 'Login',
-                          options: FFButtonOptions(
-                            width: double.infinity,
-                            height: 70.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).primary,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
-                            elevation: 4.0,
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primaryText,
-                            ),
-                            borderRadius: BorderRadius.circular(24.0),
-                          ),
-                        ),
-                      if (valueOrDefault<bool>(
-                        _model.tabBarCurrentIndex == 0,
-                        true,
-                      ))
-                        FFButtonWidget(
-                          onPressed: () async {
-                            if (_model.formKey2.currentState == null ||
-                                !_model.formKey2.currentState!.validate()) {
-                              return;
-                            }
-                            GoRouter.of(context).prepareAuthEvent();
-                            if (_model.signupPasswordTextController.text !=
-                                _model
-                                    .signupConfirmPasswordTextController.text) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'Passwords don\'t match!',
-                                  ),
-                                ),
+                              final user = await authManager.signInWithEmail(
+                                context,
+                                _model.loginEmailTextController.text,
+                                _model.loginPasswordTextController.text,
                               );
-                              return;
-                            }
+                              if (user == null) {
+                                return;
+                              }
 
-                            final user =
-                                await authManager.createAccountWithEmail(
-                              context,
-                              _model.signupEmailTextController.text,
-                              _model.signupPasswordTextController.text,
-                            );
-                            if (user == null) {
-                              return;
-                            }
-
-                            await UsersRecord.collection
-                                .doc(user.uid)
-                                .update(createUsersRecordData(
-                                  email: valueOrDefault<String>(
-                                    _model.signupEmailTextController.text,
-                                    'example@gmail.com',
+                              context.goNamedAuth('tasks', context.mounted);
+                            },
+                            text: 'Login',
+                            options: FFButtonOptions(
+                              width: double.infinity,
+                              height: 70.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 0.0, 16.0, 0.0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: FlutterFlowTheme.of(context).primary,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
                                   ),
-                                  createdTime: getCurrentTimestamp,
-                                ));
-
-                            context.goNamedAuth('onboarding', context.mounted);
-                          },
-                          text: 'Sign Up',
-                          options: FFButtonOptions(
-                            width: double.infinity,
-                            height: 70.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).primary,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
-                            elevation: 4.0,
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primaryText,
+                              elevation: 4.0,
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
+                              borderRadius: BorderRadius.circular(24.0),
                             ),
-                            borderRadius: BorderRadius.circular(24.0),
                           ),
-                        ),
-                    ],
+                        if (valueOrDefault<bool>(
+                          _model.tabBarCurrentIndex == 0,
+                          true,
+                        ))
+                          FFButtonWidget(
+                            onPressed: () async {
+                              if (_model.formKey2.currentState == null ||
+                                  !_model.formKey2.currentState!.validate()) {
+                                return;
+                              }
+                              GoRouter.of(context).prepareAuthEvent();
+                              if (_model.signupPasswordTextController.text !=
+                                  _model.signupConfirmPasswordTextController
+                                      .text) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Passwords don\'t match!',
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+
+                              final user =
+                                  await authManager.createAccountWithEmail(
+                                context,
+                                _model.signupEmailTextController.text,
+                                _model.signupPasswordTextController.text,
+                              );
+                              if (user == null) {
+                                return;
+                              }
+
+                              await UsersRecord.collection
+                                  .doc(user.uid)
+                                  .update(createUsersRecordData(
+                                    email: valueOrDefault<String>(
+                                      _model.signupEmailTextController.text,
+                                      'example@gmail.com',
+                                    ),
+                                    createdTime: getCurrentTimestamp,
+                                  ));
+
+                              context.goNamedAuth(
+                                  'onboarding', context.mounted);
+                            },
+                            text: 'Sign Up',
+                            options: FFButtonOptions(
+                              width: double.infinity,
+                              height: 70.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 0.0, 16.0, 0.0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: FlutterFlowTheme.of(context).primary,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
+                              elevation: 4.0,
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
+                              borderRadius: BorderRadius.circular(24.0),
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
                 ],
               ),
