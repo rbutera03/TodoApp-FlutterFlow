@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -467,8 +468,46 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                           birthday: _model.datePicked,
                           bio: _model.onboaringBioTextController.text,
                         ));
+                        _model.emailSent = await SendgridEmailCall.call(
+                          to: currentUserEmail,
+                          name: _model.onboaringNameTextController.text,
+                        );
+
+                        if ((_model.emailSent?.succeeded ?? true)) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Please check you email for our weclcome message!',
+                                style: TextStyle(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                ),
+                              ),
+                              duration: const Duration(milliseconds: 4000),
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).primary,
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'We\'re sorry, you\'re welcome email failed to send :(',
+                                style: TextStyle(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                ),
+                              ),
+                              duration: const Duration(milliseconds: 4000),
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).primary,
+                            ),
+                          );
+                        }
 
                         context.goNamed('tasks');
+
+                        safeSetState(() {});
                       },
                       text: 'Complete Profile',
                       options: FFButtonOptions(
