@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'onboarding_widget.dart' show OnboardingWidget;
 import 'package:flutter/material.dart';
@@ -19,6 +20,8 @@ class OnboardingModel extends FlutterFlowModel<OnboardingWidget> {
   TextEditingController? onboaringBioTextController;
   String? Function(BuildContext, String?)? onboaringBioTextControllerValidator;
   DateTime? datePicked;
+  // Stores action output result for [Backend Call - API (sendgridEmail)] action in CompleteProfButton widget.
+  ApiCallResponse? emailSent;
 
   @override
   void initState(BuildContext context) {}
